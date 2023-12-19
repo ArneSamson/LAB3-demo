@@ -15,11 +15,15 @@
             <img src="src/media/logo.svg" alt="logo">
         </div>
     </div>
-    <div class="container">
-        <h1>Yogism pose detection demo</h1>
-        <button type="button" onclick="init()">Start</button>
-        <div><canvas id="canvas"></canvas></div>
-        <div id="label-container"></div>
+    <div class="demo-container">
+        <div class="demo-container__canvas">
+            <h1>Yogism pose detection demo</h1>
+            <div>
+                <canvas id="canvas"></canvas>
+            </div>
+            <button class="demo-container__button" type="button" onclick="init()">Start</button>
+        </div>
+        <div class="demo-container__labels" id="label-container"></div>
     </div>
     <script src="src/main.js"></script>
 </body>
