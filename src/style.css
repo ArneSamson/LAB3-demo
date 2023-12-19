@@ -36,6 +36,10 @@
     --background-light: #ffffff;
     --background-dark: #000000;
 
+    
+    --border-radius: 15px;
+
+
     --font-family: 'Archivo', sans-serif;
     --body-line-height: 140%;
     --heading-line-height: 120%;
@@ -75,9 +79,58 @@
     --button-bold-weight: 700;
     --button-bold-size: 16px;
 
+
     --label-large-weight: 500;
     --label-large-size: 14px;
 
     --label-small-weight: 500;
     --label-small-size: 12px;
+}
+
+body{
+    background-color: var(--neutral-100);
+}
+h1{
+    font-family: var(--font-family);
+    font-weight: var(--heading-h1-weight);
+    font-size: var(--heading-h1-size);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: var(--text-deco);
+    text-transform: var(--text-case);
+    color: var(--neutral-1000);
+}
+h2{
+    font-family: var(--font-family);
+    font-weight: var(--heading-h2-weight);
+    font-size: var(--heading-h2-size);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: var(--text-deco);
+    text-transform: var(--text-case);
+    color: var(--neutral-1000);
+}
+h3{
+    font-family: var(--font-family);
+    font-weight: var(--heading-h3-weight);
+    font-size: var(--heading-h3-size);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: var(--text-deco);
+    text-transform: var(--text-case);
+    color: var(--neutral-1000);
+}
+h4{
+    font-family: var(--font-family);
+    font-weight: var(--heading-h4-weight);
+    font-size: var(--heading-h4-size);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: var(--text-deco);
+    text-transform: var(--text-case);
+    color: var(--neutral-1000);
+}
+
+
+.header{
 }
