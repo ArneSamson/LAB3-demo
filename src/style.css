@@ -36,7 +36,7 @@
     --background-light: #ffffff;
     --background-dark: #000000;
 
-    
+
     --border-radius: 15px;
 
 
@@ -130,7 +130,52 @@ h4{
     text-transform: var(--text-case);
     color: var(--neutral-1000);
 }
+button{
+    font-family: var(--font-family);
+    font-weight: var(--button-regular-weight);
+    font-size: var(--button-regular-size);
+    line-height: var(--button-label-line-height);
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: var(--text-deco);
+    text-transform: var(--text-case);
+    color: var(--neutral-100);
+    background-color: var(--primary-500);
+    border-radius: var(--border-radius);
+    width: 342px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+}
+button:hover{
+    background-color: var(--primary-600);
+}
 
 
 .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 0px 0px 110px;
+
+}
+
+.demo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 50px;
+    gap: 50px;
+}
+.demo-container__canvas{
+
+}
+.demo-container__labels{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    height: 300px;
+    /* margin-bottom: 50px; */
+    background-color: var(--neutral-500);
 }
