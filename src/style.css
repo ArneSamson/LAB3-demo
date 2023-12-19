@@ -174,7 +174,7 @@ button:hover{
     gap: 10px;
 }
 .webcam-container__camera-canvas{
-    background-color: var(--neutral-500);
+    background-color: var(--neutral-300);
     border-radius: var(--border-radius);
 }
 .demo-container__labels{
@@ -184,6 +184,6 @@ button:hover{
     width: 500px;
     height: 300px;
     /* margin-bottom: 50px; */
-    background-color: var(--neutral-500);
+    background-color: var(--neutral-300);
     border-radius: var(--border-radius);
 }
