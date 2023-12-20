@@ -23,7 +23,15 @@
             </div>
             <button class="webcam_container__button" type="button" onclick="init()">Start</button>
         </div>
-        <div class="demo-container__labels" id="label-container"></div>
+        <div class="demo-container__labels" id="label-container">
+            <h3>You are performing this pose</h3>
+            <div class="labels__label" id="label">
+                <div class="label__name" id="label-name"></div>
+                <p> with a </p>
+                <div class="label__confidence" id="label-confidence"></div>
+                <p> accuracy</p>
+            </div>
+        </div>
     </div>
     <script src="src/main.js"></script>
 </body>
