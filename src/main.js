@@ -2,7 +2,7 @@
     // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
     // the link to your model provided by Teachable Machine export panel
-    const URL = "./model/";
+    const URL = "../src/model/";
     let model, webcam, ctx, labelContainer, maxPredictions;
 
     async function init() {
@@ -46,14 +46,19 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
 
+        let highestPrediction = { className: "", probability: 0 };
         for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+            if (prediction[i].probability > highestPrediction.probability) {
+                highestPrediction = prediction[i];
+            }
         }
+
+        const classPrediction = highestPrediction.className + ": " + highestPrediction.probability.toFixed(2);
+        labelContainer.childNodes[0].innerHTML = classPrediction;
 
         // finally draw the poses
         drawPose(pose);
+        // console.log(highestPrediction.className);
     }
 
     function drawPose(pose) {
