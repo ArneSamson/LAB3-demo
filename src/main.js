@@ -3,7 +3,13 @@
 
     // the link to your model provided by Teachable Machine export panel
     const URL = "../src/model/";
-    let model, webcam, ctx, labelContainer, maxPredictions;
+    let model, webcam, ctx, labelContainer, labelName, labelConfidence, maxPredictions;
+
+    labelContainer = document.getElementById("label");
+    labelName = document.getElementById("label-name");
+    labelPrediction = document.getElementById("label-confidence");
+
+
 
     async function init() {
         const modelURL = URL + "model.json";
@@ -27,10 +33,6 @@
         const canvas = document.getElementById("canvas");
         canvas.width = size; canvas.height = size;
         ctx = canvas.getContext("2d");
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
     }
 
     async function loop(timestamp) {
@@ -53,9 +55,10 @@
             }
         }
 
-        const classPrediction = highestPrediction.className + ": " + highestPrediction.probability.toFixed(2);
-        labelContainer.childNodes[0].innerHTML = classPrediction;
-
+        // const classPrediction = highestPrediction.className + ": " + highestPrediction.probability.toFixed(2);
+        labelName.innerHTML = highestPrediction.className + " ";
+        //percentage of prediction
+        labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(2) + "% ";
         // finally draw the poses
         drawPose(pose);
         // console.log(highestPrediction.className);
