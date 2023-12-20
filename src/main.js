@@ -58,7 +58,7 @@
         // const classPrediction = highestPrediction.className + ": " + highestPrediction.probability.toFixed(2);
         labelName.innerHTML = highestPrediction.className + " ";
         //percentage of prediction
-        labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(2) + "% ";
+        labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
         // finally draw the poses
         drawPose(pose);
         // console.log(highestPrediction.className);
