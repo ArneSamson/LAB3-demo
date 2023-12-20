@@ -179,11 +179,32 @@ button:hover{
 }
 .demo-container__labels{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 500px;
     height: 300px;
     /* margin-bottom: 50px; */
     background-color: var(--neutral-300);
     border-radius: var(--border-radius);
+}
+
+.labels__label{
+    font-family: var(--font-family);
+    font-weight: var(--label-large-weight);
+    font-size: var(--label-large-size);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label__name{
+    font-weight: var(--heading-h4-weight);
+    font-size: var(--heading-h4-size);
+}
+.label__confidence{
+    font-weight: var(--heading-h4-weight);
+    font-size: var(----heading-h4-size);
 }
