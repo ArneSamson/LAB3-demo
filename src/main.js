@@ -31,13 +31,10 @@ function updateUI() {
             </div>
         `;
 
+
     } else {
         poseContainer.style.display = 'none';
         imageContainer.style.display = 'block';
-        //check if webcam is running, if so, stop it
-        if (webcam) {
-            webcam.stop();
-        }
 
         labelContainer.innerHTML = `
         <h3>This pose is</h3>
@@ -74,18 +71,47 @@ async function initPose() {
 }
 
 function initImage() {
+    predictImage();
 }
 
 function handleFileUpload(event) {
+    const inputElement = event.target;
+    const file = inputElement.files[0];
+    
+    if (file) {
+        const image = document.getElementById("myImg");
+        image.src = URL.createObjectURL(file);
+    }
+}
+
+async function predictImage() {
+    const image = document.getElementById("myImg");
+    const modelURL = imageModelURL + "model.json";
+    const metadataURL = imageModelURL + "metadata.json";
+
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+    
+    const prediction = await model.predict(image);
+    let highestPrediction = { className: "", probability: 0 };
+
+    for (let i = 0; i < maxPredictions; i++) {
+        if (prediction[i].probability > highestPrediction.probability) {
+            highestPrediction = prediction[i];
+        }
+    }
+
+    labelName.innerHTML = highestPrediction.className + " ";
+    labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
 }
 
 async function loop() {
     webcam.update();
-    await predict();
+    await predictPose();
     window.requestAnimationFrame(loop);
 }
 
-async function predict() {
+async function predictPose() {
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
