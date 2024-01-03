@@ -1,77 +1,70 @@
-let isWebcamMode = false;
-
-const poseModelURL = "../src/poseModel/";
-const imageModelURL = "../src/imageModel/";
-let model, webcam, ctx, labelContainer, labelName, labelConfidence, maxPredictions;
+let isWebcamMode = true;
+let model, webcam, ctx, labelContainer, labelName, labelPrediction, maxPredictions;
 
 labelContainer = document.getElementById("label");
 labelName = document.getElementById("label-name");
 labelPrediction = document.getElementById("label-confidence");
 
+async function initPose() {
+    isWebcamMode = true;
+    await init();
+}
 
+async function initImage() {
+    isWebcamMode = false;
+    await init();
+}
 
 async function init() {
-    if (isWebcamMode) {
-        const modelURL = poseModelURL + "model.json";
-        const metadataURL = poseModelURL + "metadata.json";
-        model = await tmPose.load(modelURL, metadataURL);
-    } else {
-        const modelURL = imageModelURL + "model.json";
-        const metadataURL = imageModelURL + "metadata.json";
-        model = await tmPose.load(modelURL, metadataURL);
-    }
+    const poseModelURL = "src/poseModel/";
+    const imageModelURL = "src/imageModel/";
 
-    maxPredictions = model.getTotalClasses();
+    const modelURL = isWebcamMode ? poseModelURL + "model.json" : imageModelURL + "model.json";
+    const metadataURL = isWebcamMode ? poseModelURL + "metadata.json" : imageModelURL + "metadata.json";
 
     model = await tmPose.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
-    // Convenience function to setup a webcam
-    const size = 200;
-    const flip = true; // whether to flip the webcam
-    webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
-    await webcam.play();
-    window.requestAnimationFrame(loop);
-
-    // append/get elements to the DOM
-    const canvas = document.getElementById("canvas");
-    canvas.width = size; canvas.height = size;
-    ctx = canvas.getContext("2d");
+    if (isWebcamMode) {
+        const size = 200;
+        const flip = true;
+        webcam = new tmPose.Webcam(size, size, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+    } else {
+        const img = document.getElementById("myImg");
+        img.onload = () => {
+            predictImage();
+        };
+        const fileInput = document.getElementById("upload-file");
+        const file = fileInput.files[0];
+        img.src = URL.createObjectURL(file);
+    }
 }
 
-function handleFileUpload(event) {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-
-    if (file) {
-        isWebcamMode = false;
-        // Reset webcam if it's already initialized
-        if (webcam) {
-            webcam.stop();
-            webcam = null;
-        }
-
-        // Display the uploaded image
-        const img = document.getElementById("myImg");
-        img.src = URL.createObjectURL(file);
-
-        // Start processing the uploaded file
-        init();
+function toggleMode() {
+    isWebcamMode = !isWebcamMode;
+    if (isWebcamMode) {
+        document.getElementById("pose-container").style.display = "block";
+        document.getElementById("image-container").style.display = "none";
+    } else {
+        document.getElementById("pose-container").style.display = "none";
+        document.getElementById("image-container").style.display = "block";
     }
 }
 
 async function loop(timestamp) {
-    webcam.update(); // update the webcam frame
+    if (isWebcamMode) {
+        webcam.update();
+    }
+
     await predict();
     window.requestAnimationFrame(loop);
 }
 
 async function predict() {
-    // Prediction #1: run input through posenet
-    // estimatePose can take in an image, video or canvas html element
-    const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-    // Prediction 2: run input through teachable machine classification model
+    const { pose, posenetOutput } = await model.estimatePose(isWebcamMode ? webcam.canvas : document.getElementById("myImg"));
     const prediction = await model.predict(posenetOutput);
 
     let highestPrediction = { className: "", probability: 0 };
@@ -81,19 +74,19 @@ async function predict() {
         }
     }
 
-    // const classPrediction = highestPrediction.className + ": " + highestPrediction.probability.toFixed(2);
     labelName.innerHTML = highestPrediction.className + " ";
-    //percentage of prediction
     labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
-    // finally draw the poses
+
     drawPose(pose);
-    // console.log(highestPrediction.className);
+}
+
+function predictImage() {
+    predict();
 }
 
 function drawPose(pose) {
-    if (webcam.canvas) {
+    if (isWebcamMode && webcam.canvas) {
         ctx.drawImage(webcam.canvas, 0, 0);
-        // draw the keypoints and skeleton
         if (pose) {
             const minPartConfidence = 0.5;
             tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);

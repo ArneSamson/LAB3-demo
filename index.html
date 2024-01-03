@@ -16,16 +16,21 @@
         </div>
     </div>
     <div class="demo-container">
-        <div class="demo-container__webcam-container">
+        <div class="demo-container__webcam-container" id="pose-container">
             <h1>Yogism pose detection demo</h1>
             <div>
                 <canvas class="webcam-container__camera-canvas" id="canvas"></canvas>
             </div>
-            <button class="webcam_container__button" type="button" onclick="init()">Start</button>
-
+            <button class="webcam_container__button" type="button" onclick="initPose()">Start Pose Detection</button>
+        </div>
+        
+        <div class="demo-container__webcam-container" id="image-container" style="display:none;">
+            <h1>Image classification demo</h1>
             <input type="file" id="upload-file" accept="image/*" onchange="handleFileUpload(event)">
             <img id="myImg" src="#" alt="Your Image">
+            <button class="webcam_container__button" type="button" onclick="initImage()">Classify Image</button>
         </div>
+
         <div class="demo-container__labels" id="label-container">
             <h3>You are performing this pose</h3>
             <div class="labels__label" id="label">
@@ -35,6 +40,7 @@
                 <p> accuracy</p>
             </div>
         </div>
+        <button onclick="toggleMode()">Toggle Mode</button>
     </div>
     <script src="src/main.js"></script>
 </body>
