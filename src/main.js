@@ -91,7 +91,7 @@ async function predictImage() {
 
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
-    
+
     const prediction = await model.predict(image);
     let highestPrediction = { className: "", probability: 0 };
 
