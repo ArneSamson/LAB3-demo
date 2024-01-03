@@ -3,11 +3,15 @@ let webcamMode = true;
 const poseModelURL = "../src/poseModel/";
 const imageModelURL = "../src/imageModel/";
 
-let model, webcam, ctx, labelContainer, labelName, labelConfidence, maxPredictions;
+let model, webcam, ctx, poseLabelContainer, poseLabelName, labelConfidence, maxPredictions;
 
-labelContainer = document.getElementById("label-container");
-labelName = document.getElementById("label-name");
-labelPrediction = document.getElementById("label-confidence");
+poseLabelContainer = document.getElementById("pose-label-container");
+poseLabelName = document.getElementById("pose-label-name");
+poseLabelPrediction = document.getElementById("pose-label-confidence");
+
+imageLabelContainer = document.getElementById("image-label-container");
+imageLabelName = document.getElementById("image-label-name");
+imageLabelPrediction = document.getElementById("image-label-confidence");
 
 function toggleMode() {
     webcamMode = !webcamMode;
@@ -17,34 +21,20 @@ function toggleMode() {
 function updateUI() {
     const poseContainer = document.getElementById('pose-container');
     const imageContainer = document.getElementById('image-container');
+    const poseLabels = document.getElementById('pose-label-container');
+    const imageLabels = document.getElementById('image-label-container');
 
     if (webcamMode) {
-        poseContainer.style.display = 'block';
+        poseContainer.style.display = 'flex';
+        poseLabels.style.display = 'flex';
         imageContainer.style.display = 'none';
-        labelContainer.innerHTML = `
-        <h3>You are performing this pose</h3>
-            <div class="labels__label" id="label">
-                <div class="label__name" id="label-name"></div>
-                <p> with a </p>
-                <div class="label__confidence" id="label-confidence"></div>
-                <p> accuracy</p>
-            </div>
-        `;
-
+        imageLabels.style.display = 'none';
 
     } else {
         poseContainer.style.display = 'none';
-        imageContainer.style.display = 'block';
-
-        labelContainer.innerHTML = `
-        <h3>This pose is</h3>
-        <div class="labels__label" id="label">
-            <div class="label__name" id="label-name"></div>
-            <p> with a </p>
-            <div class="label__confidence" id="label-confidence"></div>
-            <p> accuracy</p>
-        </div>
-        `;
+        poseLabels.style.display = 'none';
+        imageContainer.style.display = 'flex';
+        imageLabels.style.display = 'flex';
     }
 }
 
@@ -66,7 +56,7 @@ async function initPose() {
     canvas.width = size; canvas.height = size;
     ctx = webcam.canvas.getContext('2d');
 
-    labelContainer.appendChild(webcam.canvas);
+    poseLabelContainer.appendChild(webcam.canvas);
 
 }
 
@@ -101,8 +91,8 @@ async function predictImage() {
         }
     }
 
-    labelName.innerHTML = highestPrediction.className + " ";
-    labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
+    imageLabelName.innerHTML = highestPrediction.className + " ";
+    imageLabelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
 }
 
 async function loop() {
@@ -123,8 +113,8 @@ async function predictPose() {
             }
         }
 
-        labelName.innerHTML = highestPrediction.className + " ";
-        labelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
+        poseLabelName.innerHTML = highestPrediction.className + " ";
+        poseLabelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
 
         drawPose(pose);
 }

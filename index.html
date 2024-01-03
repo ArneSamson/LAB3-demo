@@ -32,15 +32,27 @@
             <button class="webcam_container__button" type="button" onclick="initImage()">Classify Image</button>
         </div>
 
-        <div class="demo-container__labels" id="label-container">
+        <div class="demo-container__labels" id="pose-label-container">
             <h3>You are performing this pose</h3>
-            <div class="labels__label" id="label">
-                <div class="label__name" id="label-name"></div>
+            <div class="labels__label" id="pose-label">
+                <div class="label__name" id="pose-label-name"></div>
                 <p> with a </p>
-                <div class="label__confidence" id="label-confidence"></div>
+                <div class="label__confidence" id="pose-label-confidence"></div>
                 <p> accuracy</p>
             </div>
         </div>
+
+        <div class="demo-container__labels" id="image-label-container" style="display: none;">
+            <h3>This pose is</h3>
+            <div class="labels__label" id="image-label">
+                <div class="label__name" id="image-label-name"></div>
+                <p> with a </p>
+                <div class="label__confidence" id="image-label-confidence"></div>
+                <p> accuracy</p>
+            </div>
+        </div>
+
+
     </div>
     <button class="toggle-button" onclick="toggleMode()">Toggle Mode</button>
     <script src="src/main.js"></script>
