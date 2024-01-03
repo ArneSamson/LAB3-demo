@@ -209,3 +209,10 @@ button:hover{
     font-weight: var(--heading-h4-weight);
     font-size: var(----heading-h4-size);
 }
+.toggle-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 50px;
+}
