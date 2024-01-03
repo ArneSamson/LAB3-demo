@@ -23,7 +23,7 @@
             </div>
             <button class="webcam_container__button" type="button" onclick="init()">Start</button>
 
-            <input type="file" id="upload-file" accept="image/*">
+            <input type="file" id="upload-file" accept="image/*" onchange="handleFileUpload(event)">
             <img id="myImg" src="#" alt="Your Image">
         </div>
         <div class="demo-container__labels" id="label-container">
