@@ -91,8 +91,8 @@ async function predictImage() {
         }
     }
 
-    imageLabelName.innerHTML = highestPrediction.className + " ";
-    imageLabelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "% ";
+    imageLabelName.innerHTML = highestPrediction.className;
+    imageLabelPrediction.innerHTML = (highestPrediction.probability * 100).toFixed(0) + "%";
 }
 
 async function loop() {
