@@ -5,7 +5,7 @@ const imageModelURL = "../src/imageModel/";
 
 let model, webcam, ctx, labelContainer, labelName, labelConfidence, maxPredictions;
 
-labelContainer = document.getElementById("label");
+labelContainer = document.getElementById("label-container");
 labelName = document.getElementById("label-name");
 labelPrediction = document.getElementById("label-confidence");
 
@@ -21,11 +21,33 @@ function updateUI() {
     if (webcamMode) {
         poseContainer.style.display = 'block';
         imageContainer.style.display = 'none';
+        labelContainer.innerHTML = `
+        <h3>You are performing this pose</h3>
+            <div class="labels__label" id="label">
+                <div class="label__name" id="label-name"></div>
+                <p> with a </p>
+                <div class="label__confidence" id="label-confidence"></div>
+                <p> accuracy</p>
+            </div>
+        `;
+
     } else {
         poseContainer.style.display = 'none';
         imageContainer.style.display = 'block';
-        webcam.stop();
-        webcam.canvas.remove();
+        //check if webcam is running, if so, stop it
+        if (webcam) {
+            webcam.stop();
+        }
+
+        labelContainer.innerHTML = `
+        <h3>This pose is</h3>
+        <div class="labels__label" id="label">
+            <div class="label__name" id="label-name"></div>
+            <p> with a </p>
+            <div class="label__confidence" id="label-confidence"></div>
+            <p> accuracy</p>
+        </div>
+        `;
     }
 }
 
