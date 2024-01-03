@@ -24,6 +24,8 @@ function updateUI() {
     } else {
         poseContainer.style.display = 'none';
         imageContainer.style.display = 'block';
+        webcam.stop();
+        webcam.canvas.remove();
     }
 }
 
