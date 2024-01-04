@@ -62,6 +62,7 @@ async function initPose() {
 
 function initImage() {
     predictImage();
+    //I know this is useless but it works now ok >:(
 }
 
 function handleFileUpload(event) {
