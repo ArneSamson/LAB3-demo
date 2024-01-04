@@ -1,4 +1,4 @@
-##Yogism demo
+## Yogism demo
 
 This is a demo of the Yogism app. It can see how well you're performing the hands-to-feet pose. It can aslo classify an image you upload and tell wether it's one of the following poses.
 
